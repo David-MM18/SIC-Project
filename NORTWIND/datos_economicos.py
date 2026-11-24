@@ -1,8 +1,14 @@
 import requests
 import pandas as pd
 import json
+from pathlib import Path
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
+
+# Rutas ancladas al propio archivo: funcionan sin importar desde qué
+# carpeta se ejecute el script (terminal, VS Code, etc.)
+BASE = Path(__file__).resolve().parent
+DATOS_ECONOMICOS = BASE / "datos" / "datos_economicos"
 
 def mostrar_grafico(fig, titulo="Presiona ESC para cerrar la gráfica"):
     """Muestra la figura y permite cerrarla con Escape (o con la X)."""
@@ -114,7 +120,7 @@ def obtener_historico_dolar():
     mostrar_grafico(fig)
     
 def obtener_inflacion():
-    df = pd.read_csv("./NORTWIND/datos/datos_economicos/inflacion.csv")
+    df = pd.read_csv(DATOS_ECONOMICOS / "inflacion.csv")
     df_rec = df[df["year"] >= 2000].sort_values("year")
 
     hist = df_rec[df_rec["forecast"] == 0]
@@ -147,7 +153,7 @@ def obtener_inflacion():
     mostrar_grafico(fig)    
 
 def obtener_formacion_fija_capital_fijo():
-    df = pd.read_csv("./NORTWIND/datos/datos_economicos/Formación bruta de capital fijo (USD).csv").sort_values("year")
+    df = pd.read_csv(DATOS_ECONOMICOS / "Formación bruta de capital fijo (USD).csv").sort_values("year")
     # 1. Barras del tramo reciente (sin distorsión 2015-2017)
     reciente = df[df["year"] >= 2018]
 
@@ -179,7 +185,7 @@ def obtener_formacion_fija_capital_fijo():
     mostrar_grafico(fig)
     
 def obtener_consumo_familiar():
-    df = pd.read_csv("./NORTWIND/datos/datos_economicos/Consumo familiar en USD.csv").sort_values("year")
+    df = pd.read_csv(DATOS_ECONOMICOS / "Consumo familiar en USD.csv").sort_values("year")
     rec = df[df["year"] >= 2018]
 
     fig, axes = plt.subplots(2, 1, figsize=(10, 7.5), dpi=150)
@@ -209,7 +215,7 @@ def obtener_consumo_familiar():
     mostrar_grafico(fig)
 
 def obtener_consumo_hogares():
-    df = pd.read_csv("./NORTWIND/datos/datos_economicos/Consumo de los hogares (% del PIB).csv").sort_values("year")
+    df = pd.read_csv(DATOS_ECONOMICOS / "Consumo de los hogares (% del PIB).csv").sort_values("year")
     rec = df[df["year"] >= 2000].copy()
     df["ma5"] = df["hcons_GDP"].rolling(5).mean()
 
@@ -238,7 +244,7 @@ def obtener_consumo_hogares():
     mostrar_grafico(fig)
 
 def obtener_consumo_gobierno():
-    df = pd.read_csv("./NORTWIND/datos/datos_economicos/Consumo gubernamental.csv").sort_values("year")
+    df = pd.read_csv(DATOS_ECONOMICOS / "Consumo gubernamental.csv").sort_values("year")
     rec = df[df["year"] >= 2018]
 
     fig, axes = plt.subplots(2, 1, figsize=(10, 7.5), dpi=150)
@@ -268,7 +274,7 @@ def obtener_consumo_gobierno():
     mostrar_grafico(fig)
 
 def obtener_pib_real():
-    df = pd.read_csv("./NORTWIND/datos/datos_economicos/pib real usd.csv").sort_values("year")
+    df = pd.read_csv(DATOS_ECONOMICOS / "pib real usd.csv").sort_values("year")
     rec = df[df["year"] >= 2000].copy()
     rec["pct_change"] = rec["rGDP_pc_USD"].pct_change() * 100
 
@@ -302,7 +308,7 @@ def obtener_pib_real():
     mostrar_grafico(fig)
 
 def obtener_importaciones():
-    df = pd.read_csv("./NORTWIND/datos/datos_economicos/Importaciones en USD.csv").sort_values("year")
+    df = pd.read_csv(DATOS_ECONOMICOS / "Importaciones en USD.csv").sort_values("year")
     rec = df[df["year"] >= 2018].copy()
     df_hist = df[df["year"] >= 1950].copy()
     df_hist["ma5"] = df_hist["imports_USD"].rolling(5).mean()
@@ -335,7 +341,7 @@ def obtener_importaciones():
     mostrar_grafico(fig)
     
 def importaciones_pbi():
-    df = pd.read_csv("./NORTWIND/datos/datos_economicos/Importaciones (% del PIB).csv").sort_values("year")
+    df = pd.read_csv(DATOS_ECONOMICOS / "Importaciones (% del PIB).csv").sort_values("year")
     rec = df[df["year"] >= 2000].copy()
     hist = rec[rec["forecast"] == 0]
     fcast = rec[rec["forecast"] == 1]
@@ -412,4 +418,5 @@ def menu():
         else:
             print("Opción no válida. Intente nuevamente.")
             
-menu()
+if __name__ == "__main__":
+    menu()
