@@ -3,12 +3,12 @@
 
 Este repositorio contiene la **Fase 1** del proyecto **Proyecto-Sic**, un sistema SaaS (Software as a Service) diseñado para digitalizar el flujo de trabajo de una fábrica o distribuidora de puertas.
 
-## 🎯 La Visión del Proyecto (Fase Final)
+##  La Visión del Proyecto (Fase Final)
 El objetivo del SaaS es doble:
 1. **Ingreso de Medidas y Pedidos:** Permitir que un cliente (o un vendedor) ingrese las medidas exactas de una puerta (ancho, alto, espesor, tipo de material, sentido de apertura). Estos datos se enviarán a un sistema de órdenes que generará la orden de corte y producción exacta.
 2. **Analítica y Business Intelligence (BI):** Un panel de control (dashboard) que analice la frecuencia de los pedidos. ¿Cuáles son las medidas más solicitadas? ¿Qué tipo de puerta se vende más por temporada? Esto ayuda a optimizar el inventario de materia prima y la logística de cortes.
 
-## 🧪 ¿Qué es esta Fase 1? (El Prototipo)
+##  ¿Qué es esta Fase 1? (El Prototipo)
 Antes de construir la compleja base de datos de medidas y el sistema de cortes, esta Fase 1 se enfoca en **construir y validar la arquitectura modular** del software (lectura de datos, cálculo de KPIs y visualización). 
 
 Para probar este motor sin afectar los datos reales de la fábrica, hemos utilizado dos "campos de pruebas":
@@ -17,7 +17,7 @@ Para probar este motor sin afectar los datos reales de la fábrica, hemos utiliz
 
 ---
 
-## 📂 Estructura Modular (Preparada para escalar)
+##  Estructura Modular (Preparada para escalar)
 
 El sistema está diseñado para que, cuando pasemos a la Fase 2, solo tengamos que cambiar los datos de prueba por la base de datos real de las puertas. 
 
