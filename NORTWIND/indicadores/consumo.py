@@ -1,11 +1,13 @@
+import os
 import matplotlib
 import pandas as pd
 matplotlib.use('TkAgg') #soporte para mostrar gráficos en ventanas separadas en linux
 import matplotlib.pyplot as plt
+from config import DATOS
 from utils import mostrar_grafico
 
 def obtener_consumo_familiar():
-    df = pd.read_csv("./datos/datos_economicos/Consumo familiar en USD.csv").sort_values("year")
+    df = pd.read_csv(os.path.join(DATOS, "datos_economicos", "Consumo familiar en USD.csv")).sort_values("year")
     rec = df[df["year"] >= 2018]
 
     fig, axes = plt.subplots(2, 1, figsize=(10, 7.5), dpi=150)
@@ -29,7 +31,7 @@ def obtener_consumo_familiar():
     mostrar_grafico(fig)
 
 def obtener_consumo_hogares():
-    df = pd.read_csv("./datos/datos_economicos/Consumo de los hogares (% del PIB).csv").sort_values("year")
+    df = pd.read_csv(os.path.join(DATOS, "datos_economicos", "Consumo de los hogares (% del PIB).csv")).sort_values("year")
     rec = df[df["year"] >= 2000].copy()
     df["ma5"] = df["hcons_GDP"].rolling(5).mean()
 
@@ -52,7 +54,7 @@ def obtener_consumo_hogares():
     mostrar_grafico(fig)
 
 def obtener_consumo_gobierno():
-    df = pd.read_csv("./datos/datos_economicos/Consumo gubernamental.csv").sort_values("year")
+    df = pd.read_csv(os.path.join(DATOS, "datos_economicos", "Consumo gubernamental.csv")).sort_values("year")
     rec = df[df["year"] >= 2018]
 
     fig, axes = plt.subplots(2, 1, figsize=(10, 7.5), dpi=150)

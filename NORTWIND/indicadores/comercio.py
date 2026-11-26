@@ -1,12 +1,14 @@
 
+import os
 import matplotlib
 matplotlib.use('TkAgg') #soporte para mostrar gráficos en ventanas separadas en linux
 import pandas as pd
 import matplotlib.pyplot as plt
+from config import DATOS
 from utils import mostrar_grafico
 
 def obtener_importaciones():
-    df = pd.read_csv("./datos/datos_economicos/Importaciones en USD.csv").sort_values("year")
+    df = pd.read_csv(os.path.join(DATOS, "datos_economicos", "Importaciones en USD.csv")).sort_values("year")
     rec = df[df["year"] >= 2018].copy()
     df_hist = df[df["year"] >= 1950].copy()
     df_hist["ma5"] = df_hist["imports_USD"].rolling(5).mean()
@@ -31,7 +33,7 @@ def obtener_importaciones():
     mostrar_grafico(fig)
 
 def importaciones_pbi():
-    df = pd.read_csv("./datos/datos_economicos/Importaciones (% del PIB).csv").sort_values("year")
+    df = pd.read_csv(os.path.join(DATOS, "datos_economicos", "Importaciones (% del PIB).csv")).sort_values("year")
     rec = df[df["year"] >= 2000].copy()
     hist = rec[rec["forecast"] == 0]
     fcast = rec[rec["forecast"] == 1]

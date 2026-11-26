@@ -2,6 +2,7 @@ import matplotlib
 matplotlib.use('TkAgg') #soporte para mostrar gráficos en ventanas separadas en linux
 import os
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 from config import GRAFICOS
 from northwind.calculos import calcular_top_ordenes, calcular_top_productos, calcular_top_beneficio, calcular_top_recaudado

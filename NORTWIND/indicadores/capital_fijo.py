@@ -1,11 +1,13 @@
+import os
 import matplotlib
 matplotlib.use('TkAgg') #soporte para mostrar gráficos en ventanas separadas en linux
 import pandas as pd
 import matplotlib.pyplot as plt
+from config import DATOS
 from utils import mostrar_grafico
 
 def obtener_formacion_fija_capital_fijo():
-    df = pd.read_csv("./datos/datos_economicos/Formación bruta de capital fijo (USD).csv").sort_values("year")
+    df = pd.read_csv(os.path.join(DATOS, "datos_economicos", "Formación bruta de capital fijo (USD).csv")).sort_values("year")
     reciente = df[df["year"] >= 2018]
 
     fig, axes = plt.subplots(2, 1, figsize=(10, 7.5), dpi=150)

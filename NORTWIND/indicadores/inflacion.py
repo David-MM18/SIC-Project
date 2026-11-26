@@ -1,11 +1,13 @@
+import os
 import pandas as pd
 import matplotlib
 matplotlib.use('TkAgg') #soporte para mostrar gráficos en ventanas separadas en linux
 import matplotlib.pyplot as plt
+from config import DATOS
 from utils import mostrar_grafico
 
 def obtener_inflacion():
-    df = pd.read_csv("./datos/datos_economicos/inflacion.csv")
+    df = pd.read_csv(os.path.join(DATOS, "datos_economicos", "inflacion.csv"))
     df_rec = df[df["year"] >= 2000].sort_values("year")
 
     hist = df_rec[df_rec["forecast"] == 0]

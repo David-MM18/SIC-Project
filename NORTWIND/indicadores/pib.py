@@ -1,11 +1,13 @@
+import os
 import pandas as pd
 import matplotlib
 matplotlib.use('TkAgg') #soporte para mostrar gráficos en ventanas separadas en linux
 import matplotlib.pyplot as plt
+from config import DATOS
 from utils import mostrar_grafico
 
 def obtener_pib_real():
-    df = pd.read_csv("./datos/datos_economicos/pib real usd.csv").sort_values("year")
+    df = pd.read_csv(os.path.join(DATOS, "datos_economicos", "pib real usd.csv")).sort_values("year")
     rec = df[df["year"] >= 2000].copy()
     rec["pct_change"] = rec["rGDP_pc_USD"].pct_change() * 100
 
