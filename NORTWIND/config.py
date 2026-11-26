@@ -17,5 +17,3 @@ if os.name == 'nt':
         sys.stderr.reconfigure(encoding='utf-8', errors='replace')
     except Exception:
         pass
-
-plt.rcParams['text.parse_math'] = False

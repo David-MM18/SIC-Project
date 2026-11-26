@@ -3,6 +3,23 @@ import matplotlib
 import requests
 matplotlib.use('TkAgg') #soporte para mostrar gráficos en ventanas separadas en linux
 import matplotlib.pyplot as plt
+from matplotlib.ticker import FuncFormatter
+
+def formato_miles(ax, eje="y"):
+    """Muestra los ticks del eje con separador de miles y sin notación científica."""
+    formateador = FuncFormatter(lambda valor, _: f"{valor:,.0f}")
+    if eje == "y":
+        ax.yaxis.set_major_formatter(formateador)
+    else:
+        ax.xaxis.set_major_formatter(formateador)
+
+def marcar_fuera_de_escala(ax, desde, hasta, nota, color="#c0392b"):
+    """Sombrea un periodo con valores fuera del tope del eje y lo explica con una nota."""
+    ax.axvspan(desde - 0.5, hasta + 0.5, color=color, alpha=0.10, zorder=0)
+    ax.text(0.985, 0.96, nota, transform=ax.transAxes, va="top", ha="right",
+            fontsize=8, color=color,
+            bbox=dict(boxstyle="round,pad=0.35", facecolor="white",
+                      edgecolor=color, alpha=0.9), zorder=6)
 
 def mostrar_grafico(fig, titulo="Presiona ESC para cerrar la gráfica"):
     """Muestra la figura maximizada (pantalla completa) para verla completa sin moverla.

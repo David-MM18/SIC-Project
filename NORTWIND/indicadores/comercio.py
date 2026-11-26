@@ -5,7 +5,7 @@ matplotlib.use('TkAgg') #soporte para mostrar gráficos en ventanas separadas en
 import pandas as pd
 import matplotlib.pyplot as plt
 from config import DATOS
-from utils import mostrar_grafico
+from utils import mostrar_grafico, formato_miles, marcar_fuera_de_escala
 
 def obtener_importaciones():
     df = pd.read_csv(os.path.join(DATOS, "datos_economicos", "Importaciones en USD.csv")).sort_values("year")
@@ -22,12 +22,16 @@ def obtener_importaciones():
 
     axes[1].plot(df_hist["year"], df_hist["imports_USD"], label="Anual", color="#1f4e78")
     axes[1].plot(df_hist["year"], df_hist["ma5"], linestyle="--", label="Media móvil 5 años", color="#c0392b")
-    axes[1].set_yscale("log")
-    axes[1].set_title("Trayectoria Histórica (1950 – 2027, escala logarítmica)")
+    axes[1].set_ylim(0, 160_000)
+    marcar_fuera_de_escala(axes[1], 2015, 2017, "2015–2017 fuera de escala · máx. 7 337 400")
+    axes[1].set_title("Trayectoria Histórica (1950 – 2027)")
     axes[1].set_xlabel("Año")
-    axes[1].set_ylabel("Millones de USD [Log]")
-    axes[1].grid(True, which="both", linestyle="--", alpha=0.35)
-    axes[1].legend()
+    axes[1].set_ylabel("Millones de USD")
+    axes[1].grid(True, linestyle="--", alpha=0.4)
+    axes[1].legend(loc="upper left")
+
+    formato_miles(axes[0])
+    formato_miles(axes[1])
 
     plt.tight_layout()
     mostrar_grafico(fig)

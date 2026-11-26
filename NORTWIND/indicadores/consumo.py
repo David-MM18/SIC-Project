@@ -4,7 +4,7 @@ import pandas as pd
 matplotlib.use('TkAgg') #soporte para mostrar gráficos en ventanas separadas en linux
 import matplotlib.pyplot as plt
 from config import DATOS
-from utils import mostrar_grafico
+from utils import mostrar_grafico, formato_miles, marcar_fuera_de_escala
 
 def obtener_consumo_familiar():
     df = pd.read_csv(os.path.join(DATOS, "datos_economicos", "Consumo familiar en USD.csv")).sort_values("year")
@@ -20,12 +20,16 @@ def obtener_consumo_familiar():
     df["ma5"] = df["hcons_USD"].rolling(5).mean()
     axes[1].plot(df["year"], df["hcons_USD"], label="Anual", color="#1f618d")
     axes[1].plot(df["year"], df["ma5"], linestyle="--", label="Media móvil 5 años", color="#d35400")
-    axes[1].set_yscale("log")
-    axes[1].set_title("Trayectoria Histórica (1950 – 2024, escala logarítmica)")
+    axes[1].set_ylim(0, 382_000)
+    marcar_fuera_de_escala(axes[1], 2015, 2017, "2015–2017 fuera de escala · máx. 17 927 096")
+    axes[1].set_title("Trayectoria Histórica (1950 – 2024)")
     axes[1].set_xlabel("Año")
-    axes[1].set_ylabel("Millones de USD [Log]")
-    axes[1].grid(True, which="both", linestyle="--", alpha=0.35)
-    axes[1].legend()
+    axes[1].set_ylabel("Millones de USD")
+    axes[1].grid(True, linestyle="--", alpha=0.4)
+    axes[1].legend(loc="upper left")
+
+    formato_miles(axes[0])
+    formato_miles(axes[1])
 
     plt.tight_layout()
     mostrar_grafico(fig)
@@ -61,18 +65,22 @@ def obtener_consumo_gobierno():
 
     axes[0].bar(rec["year"], rec["gcons_USD"], color="#5b2c6f")
     axes[0].set_title("Consumo Gubernamental (2018 – 2024)")
-    axes[0].set_ylabel("Unidades de la serie")
+    axes[0].set_ylabel("Millones de USD")
     axes[0].grid(True, axis="y", linestyle="--", alpha=0.4)
 
     df["ma5"] = df["gcons_USD"].rolling(5).mean()
     axes[1].plot(df["year"], df["gcons_USD"], label="Anual", color="#1f4e78")
     axes[1].plot(df["year"], df["ma5"], linestyle="--", label="Media móvil 5 años", color="#c0392b")
-    axes[1].set_yscale("log")
-    axes[1].set_title("Trayectoria Histórica (1950 – 2024, escala logarítmica)")
+    axes[1].set_ylim(0, 74_000)
+    marcar_fuera_de_escala(axes[1], 2015, 2017, "2015–2017 fuera de escala · máx. 1 812 251")
+    axes[1].set_title("Trayectoria Histórica (1950 – 2024)")
     axes[1].set_xlabel("Año")
-    axes[1].set_ylabel("Unidades de la serie [Log]")
-    axes[1].grid(True, which="both", linestyle="--", alpha=0.35)
-    axes[1].legend()
+    axes[1].set_ylabel("Millones de USD")
+    axes[1].grid(True, linestyle="--", alpha=0.4)
+    axes[1].legend(loc="upper left")
+
+    formato_miles(axes[0])
+    formato_miles(axes[1])
 
     plt.tight_layout()
     mostrar_grafico(fig)
