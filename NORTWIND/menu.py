@@ -22,8 +22,6 @@ from northwind import (
 
 def limpiar_pantalla():
     run(['cls' if os.name == 'nt' else 'clear'], shell=True)
-    # os.system('cls' if os.name == 'nt' else 'clear')
-
 
 def imprimir_menu(secciones):
     limpiar_pantalla()
