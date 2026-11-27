@@ -1,9 +1,12 @@
 import pandas as pd
 import matplotlib
-matplotlib.use('TkAgg') #soporte para mostrar gráficos en ventanas separadas en linux
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 from utils import hacer_peticion, mostrar_grafico
+
+
+matplotlib.use('TkAgg') #soporte para mostrar gráficos en ventanas separadas en linux
+
 
 def obtener_historico_dolar():
     historico_dolar = hacer_peticion("https://ve.dolarapi.com/v1/historicos/dolares/oficial")

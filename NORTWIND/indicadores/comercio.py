@@ -1,11 +1,13 @@
-
 import os
 import matplotlib
-matplotlib.use('TkAgg') #soporte para mostrar gráficos en ventanas separadas en linux
 import pandas as pd
 import matplotlib.pyplot as plt
 from config import DATOS
 from utils import mostrar_grafico, formato_miles, marcar_fuera_de_escala
+
+
+matplotlib.use('TkAgg') #soporte para mostrar gráficos en ventanas separadas en linux
+
 
 def obtener_importaciones():
     df = pd.read_csv(os.path.join(DATOS, "datos_economicos", "Importaciones en USD.csv")).sort_values("year")
@@ -35,6 +37,7 @@ def obtener_importaciones():
 
     plt.tight_layout()
     mostrar_grafico(fig)
+
 
 def importaciones_pbi():
     df = pd.read_csv(os.path.join(DATOS, "datos_economicos", "Importaciones (% del PIB).csv")).sort_values("year")

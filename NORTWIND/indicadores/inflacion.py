@@ -1,10 +1,13 @@
 import os
 import pandas as pd
 import matplotlib
-matplotlib.use('TkAgg') #soporte para mostrar gráficos en ventanas separadas en linux
 import matplotlib.pyplot as plt
 from config import DATOS
 from utils import mostrar_grafico, formato_miles, marcar_fuera_de_escala
+
+
+matplotlib.use('TkAgg') #soporte para mostrar gráficos en ventanas separadas en linux
+
 
 def obtener_inflacion():
     df = pd.read_csv(os.path.join(DATOS, "datos_economicos", "inflacion.csv"))

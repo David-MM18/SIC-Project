@@ -1,5 +1,6 @@
 import os
 from utils import mostrar_grafico
+from subprocess import run
 
 # 1. Importamos tus indicadores económicos
 from indicadores import (
@@ -18,8 +19,11 @@ from northwind import (
     op_importe_empleado, op_precio_unidades, op_dias_semana, op_unidades_categoria
 )
 
+
 def limpiar_pantalla():
-    os.system('cls' if os.name == 'nt' else 'clear')
+    run(['cls' if os.name == 'nt' else 'clear'], shell=True)
+    # os.system('cls' if os.name == 'nt' else 'clear')
+
 
 def imprimir_menu(secciones):
     limpiar_pantalla()
@@ -40,6 +44,7 @@ def imprimir_menu(secciones):
         print('-' * ancho)
     print('    0. Salir')
     print('=' * ancho)
+
 
 def construir_menu():
     secciones = [
@@ -86,6 +91,7 @@ def construir_menu():
             numero += 1
         numerado.append((nombre, nuevos))
     return numerado
+
 
 def main():
     print('Cargando datos de Northwind...')

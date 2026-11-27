@@ -1,10 +1,13 @@
 import os
 import matplotlib
 import pandas as pd
-matplotlib.use('TkAgg') #soporte para mostrar gráficos en ventanas separadas en linux
 import matplotlib.pyplot as plt
 from config import DATOS
 from utils import mostrar_grafico, formato_miles, marcar_fuera_de_escala
+
+
+matplotlib.use('TkAgg') #soporte para mostrar gráficos en ventanas separadas en linux
+
 
 def obtener_consumo_familiar():
     df = pd.read_csv(os.path.join(DATOS, "datos_economicos", "Consumo familiar en USD.csv")).sort_values("year")
@@ -34,6 +37,7 @@ def obtener_consumo_familiar():
     plt.tight_layout()
     mostrar_grafico(fig)
 
+
 def obtener_consumo_hogares():
     df = pd.read_csv(os.path.join(DATOS, "datos_economicos", "Consumo de los hogares (% del PIB).csv")).sort_values("year")
     rec = df[df["year"] >= 2000].copy()
@@ -56,6 +60,7 @@ def obtener_consumo_hogares():
 
     plt.tight_layout()
     mostrar_grafico(fig)
+
 
 def obtener_consumo_gobierno():
     df = pd.read_csv(os.path.join(DATOS, "datos_economicos", "Consumo gubernamental.csv")).sort_values("year")

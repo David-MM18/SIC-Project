@@ -7,8 +7,10 @@ import matplotlib.pyplot as plt
 from config import GRAFICOS
 from northwind.calculos import calcular_top_ordenes, calcular_top_productos, calcular_top_beneficio, calcular_top_recaudado
 
+
 def _hint(fig):
     fig.text(0.5, 0.01, '>> Presiona ESC para volver al menú <<', ha='center', fontsize=10, style='italic', color='gray')
+
 
 def crear_grafico(df, titulo, tono, xlabel, ylabel, filename=None, vertical=False):
     col0, col1 = df.columns
@@ -20,12 +22,12 @@ def crear_grafico(df, titulo, tono, xlabel, ylabel, filename=None, vertical=Fals
         ax.grid(axis='y', alpha=0.3)
         ax.set_ylim(0, df[col1].max() * 1.18)
         for cont in ax.containers:
-            ax.bar_label(cont, fmt='{:,.0f}', rotation=90, padding=3, fontsize=8)
+            ax.bar_label(cont, fmt='{:,.0f}', rotation=90, padding=3, fontsize=8) # type: ignore
     else:
         df.plot(x=col0, y=col1, kind='barh', ax=ax, legend=False, color=tono)
         ax.grid(axis='x', alpha=0.3)
         for cont in ax.containers:
-            ax.bar_label(cont, fmt='{:,.0f}', padding=3, fontsize=9)
+            ax.bar_label(cont, fmt='{:,.0f}', padding=3, fontsize=9) # type: ignore
 
     ax.set_title(titulo, fontsize=14, fontweight='bold')
     ax.set_xlabel(xlabel)
@@ -121,12 +123,13 @@ def op_boxplots(ctx):
     fig.savefig(os.path.join(GRAFICOS, 'BoxPlots.png'), dpi=150, bbox_inches='tight')
     return fig
 
+
 def op_matriz(ctx):
     df_full = ctx['df_full']
     cols = ['Quantity', 'Price', 'CategoryID', 'SupplierID', 'ShipperID', 'EmployeeID']
     corr = df_full[cols].corr(numeric_only=True)
     fig = plt.figure(figsize=(8.5, 7))
-    ax = fig.add_axes([0.14, 0.26, 0.64, 0.60])
+    ax = fig.add_axes([0.14, 0.26, 0.64, 0.60]) # type: ignore
     im = ax.imshow(corr.values, cmap='coolwarm', vmin=-1, vmax=1)
     cbar = fig.colorbar(im, ax=ax)
     cbar.set_label('Correlación')
@@ -144,6 +147,7 @@ def op_matriz(ctx):
     fig.savefig(os.path.join(GRAFICOS, 'MatrizCorrelacion.png'), dpi=150, bbox_inches='tight')
     return fig
 
+
 def op_ventas_mes(ctx):
     df_full = ctx['df_full']
     serie = (df_full.dropna(subset=['OrderDate']).set_index('OrderDate').sort_index()['LineTotal'].resample('ME').sum())
@@ -158,15 +162,18 @@ def op_ventas_mes(ctx):
     fig.savefig(os.path.join(GRAFICOS, 'VentasPorMes.png'), dpi=150, bbox_inches='tight')
     return fig
 
+
 def op_top_importe(ctx):
     df_full = ctx['df_full']
     df = (df_full.groupby('ProductName', as_index=False)['LineTotal'].sum().nlargest(10, 'LineTotal')[['ProductName', 'LineTotal']].sort_values('LineTotal'))
     return crear_grafico(df, 'Top 10 Productos por Importe', 'teal', 'Producto', 'Importe ($)', 'TopImporteProductos.png', vertical=True)
 
+
 def op_importe_categoria(ctx):
     df_full = ctx['df_full']
     df = (df_full.groupby('CategoryName', as_index=False)['LineTotal'].sum().sort_values('LineTotal'))
     return crear_grafico(df, 'Importe por Categoría', 'coral', 'Categoría', 'Importe ($)', 'ImportePorCategoria.png', vertical=True)
+
 
 def op_top_paises(ctx):
     df_full = ctx['df_full']
@@ -176,12 +183,12 @@ def op_top_paises(ctx):
     fig, ax = plt.subplots(figsize=(10, 6))
     ax.scatter(df['Pedidos'], df['Importe'], s=140, color='slateblue', alpha=0.85, edgecolors='white', linewidths=1.5, zorder=3)
     for pais, fila in df.iterrows():
-        ax.annotate(pais, (fila['Pedidos'], fila['Importe']), textcoords='offset points', xytext=(0, 10), ha='center', fontsize=9)
+        ax.annotate(pais, (fila['Pedidos'], fila['Importe']), textcoords='offset points', xytext=(0, 10), ha='center', fontsize=9) # type: ignore
     ax.set_title('Top 10 Países: Pedidos vs Importe Recaudado', fontsize=14, fontweight='bold')
     ax.set_xlabel('Número de pedidos')
     ax.set_ylabel('Importe recaudado ($)')
     ax.set_ylim(0, df['Importe'].max() * 1.18)
-    ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda v, _: f'{v:,.0f}'))
+    ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda v, _: f'{v:,.0f}')) # type: ignore
     ax.grid(alpha=0.3, zorder=0)
     _hint(fig)
     fig.tight_layout(rect=(0, 0.06, 1, 1))

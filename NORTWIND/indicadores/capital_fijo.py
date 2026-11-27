@@ -1,10 +1,13 @@
 import os
 import matplotlib
-matplotlib.use('TkAgg') #soporte para mostrar gráficos en ventanas separadas en linux
 import pandas as pd
 import matplotlib.pyplot as plt
 from config import DATOS
 from utils import mostrar_grafico, formato_miles, marcar_fuera_de_escala
+
+
+matplotlib.use('TkAgg') #soporte para mostrar gráficos en ventanas separadas en linux
+
 
 def obtener_formacion_fija_capital_fijo():
     df = pd.read_csv(os.path.join(DATOS, "datos_economicos", "Formación bruta de capital fijo (USD).csv")).sort_values("year")
